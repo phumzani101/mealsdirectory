@@ -19,18 +19,10 @@ export const restaurantTransform = (data) => {
     ];
     return {
       ...restaurant,
+      address: restaurant.vicinity,
       isClosedTemporary: restaurant.business_status === "CLOSED_TEMPORARILY",
       isOpenNow: restaurant.opening_hours && restaurant.opening_hours.open_now,
     };
   });
   return camelize(results);
 };
-
-// restaurantsRequest()
-//   .then(transformer)
-//   .then((restaurants) => {
-//     console.log(restaurants);
-//   })
-//   .catch((err) => {
-//     console.log(err);
-//   });

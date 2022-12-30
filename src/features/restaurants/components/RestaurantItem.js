@@ -49,17 +49,19 @@ const Open = styled(SvgXml)`
   flex-direction: row;
 `;
 
-const RestaurantInfo = ({ restaurant }) => {
+const RestaurantItem = ({ restaurant }) => {
   const {
     name = "fuckery Restriction",
-    icon,
+    // icon,
     photos = [],
     address = "fuckery St",
     isOpenNow = true,
     rating = 4,
     isClosedTemporily = false,
+    place_id,
   } = restaurant;
   const ratingArray = Array.from(new Array(Math.floor(rating)));
+
   return (
     <StyledCard>
       <Card.Cover source={{ uri: photos[0] }} key={name} />
@@ -68,7 +70,12 @@ const RestaurantInfo = ({ restaurant }) => {
         <Section>
           <RatingRow>
             {ratingArray.map((_, i) => (
-              <SvgXml xml={star} width={20} height={20} key={i} />
+              <SvgXml
+                xml={star}
+                width={20}
+                height={20}
+                key={`${place_id}-${i}`}
+              />
             ))}
           </RatingRow>
           <SectionEnd>
@@ -89,4 +96,4 @@ const RestaurantInfo = ({ restaurant }) => {
 
 // const styles = StyleSheet.create({});
 
-export default RestaurantInfo;
+export default RestaurantItem;

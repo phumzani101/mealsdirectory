@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import { SafeAreaView, StatusBar, FlatList } from "react-native";
-import SearchBarView from "../components/SearchBarView";
-import RestaurantInfo from "../components/RestaurantInfo";
+import RestaurantItem from "../components/RestaurantItem";
 
 import styled from "styled-components/native";
 import { RestaurantContext } from "../../../services/restraurants/RestaurantContext";
 import { ActivityIndicator, MD2Colors } from "react-native-paper";
+import RestaurantSearchBar from "../components/RestaurantSearchBar";
 
 const SafeAreaViewContainer = styled(SafeAreaView)`
   flex: 1;
@@ -14,10 +14,6 @@ const SafeAreaViewContainer = styled(SafeAreaView)`
   /* margin-top: ${StatusBar.currentHeight
     ? StatusBar.currentHeight + "px"
     : "0px"}; */
-`;
-
-const SearchContainer = styled.View`
-  padding: ${(props) => props.theme.space[3]};
 `;
 
 const ListContainer = styled(FlatList).attrs({
@@ -36,14 +32,12 @@ const ActivityLoader = styled(ActivityIndicator)`
 
 export default function RestraurantScreen() {
   // const data = [{ name: 1 }, { name: 2 }, { name: 3 }];
-  const { restaurants = [], isLoading, error } = useContext(RestaurantContext);
+  const { restaurants = [], isLoading } = useContext(RestaurantContext);
 
   return (
     <>
       <SafeAreaViewContainer>
-        <SearchContainer>
-          <SearchBarView />
-        </SearchContainer>
+        <RestaurantSearchBar />
         {isLoading && (
           <LoaderContainer>
             <ActivityLoader
@@ -56,7 +50,7 @@ export default function RestraurantScreen() {
         <ListContainer
           data={restaurants}
           renderItem={({ item }) => {
-            return <RestaurantInfo restaurant={item} />;
+            return <RestaurantItem restaurant={item} />;
           }}
           keyExtractor={(item) => item.name}
         />
