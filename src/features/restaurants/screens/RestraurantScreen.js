@@ -7,6 +7,7 @@ import styled from "styled-components/native";
 import { RestaurantContext } from "../../../services/restraurants/RestaurantContext";
 import { ActivityIndicator, MD2Colors } from "react-native-paper";
 import RestaurantSearchBar from "../components/RestaurantSearchBar";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const SafeAreaViewContainer = styled(SafeAreaView)`
   flex: 1;
@@ -30,8 +31,7 @@ const ActivityLoader = styled(ActivityIndicator)`
   margin-left: -25px;
 `;
 
-export default function RestraurantScreen() {
-  // const data = [{ name: 1 }, { name: 2 }, { name: 3 }];
+export default function RestraurantScreen({ navigation }) {
   const { restaurants = [], isLoading } = useContext(RestaurantContext);
 
   return (
@@ -50,7 +50,17 @@ export default function RestraurantScreen() {
         <ListContainer
           data={restaurants}
           renderItem={({ item }) => {
-            return <RestaurantItem restaurant={item} />;
+            return (
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate("RestraurantDetails", {
+                    restaurant: item,
+                  })
+                }
+              >
+                <RestaurantItem restaurant={item} />
+              </TouchableOpacity>
+            );
           }}
           keyExtractor={(item) => item.name}
         />

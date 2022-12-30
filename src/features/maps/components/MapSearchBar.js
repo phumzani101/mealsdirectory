@@ -5,9 +5,13 @@ import { Searchbar } from "react-native-paper";
 
 const SearchContainer = styled.View`
   padding: ${(props) => props.theme.space[3]};
+  position: absolute;
+  z-index: 999;
+  top: 10px;
+  width: 100%;
 `;
 
-const RestaurantSearchBar = () => {
+const MapSearchBar = () => {
   const { keyword, search } = useContext(LocationContext);
   const [searchQuery, setSearchQuery] = React.useState(keyword || "");
 
@@ -25,6 +29,7 @@ const RestaurantSearchBar = () => {
       <SearchContainer>
         <Searchbar
           placeholder="Search for a location"
+          icon="map"
           onChangeText={onChangeSearch}
           value={searchQuery}
           onSubmitEditing={onSubmitEditing}
@@ -34,4 +39,4 @@ const RestaurantSearchBar = () => {
   );
 };
 
-export default RestaurantSearchBar;
+export default MapSearchBar;
