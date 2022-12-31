@@ -1,6 +1,6 @@
 # MealsDirectory
 
-A geolocation react native app (Udemy course)
+A geolocation restaurants react native app (Udemy course)
 
 ### Setting up
 
