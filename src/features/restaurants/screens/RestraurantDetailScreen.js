@@ -2,6 +2,7 @@ import React from "react";
 import { SafeAreaView, StatusBar, ScrollView } from "react-native";
 
 import styled from "styled-components/native";
+import RestaurantDetails from "../components/RestaurantDetails";
 import RestaurantItem from "../components/RestaurantItem";
 import RestaurantList from "../components/RestaurantList";
 const SafeAreaViewContainer = styled(SafeAreaView)`
@@ -22,7 +23,7 @@ const RestraurantDetailScreen = ({ route }) => {
     <SafeAreaViewContainer>
       <ScrollView>
         <DetailContainer>
-          <RestaurantItem restaurant={restaurant} />
+          <RestaurantDetails restaurant={restaurant} />
           <RestaurantList />
         </DetailContainer>
       </ScrollView>

@@ -7,7 +7,7 @@ const SearchContainer = styled.View`
   padding: ${(props) => props.theme.space[3]};
 `;
 
-const RestaurantSearchBar = () => {
+const RestaurantSearchBar = ({ isFavouriteToggled, setIsFavouriteToggled }) => {
   const { keyword, search } = useContext(LocationContext);
   const [searchQuery, setSearchQuery] = React.useState(keyword || "");
 
@@ -24,6 +24,8 @@ const RestaurantSearchBar = () => {
     <>
       <SearchContainer>
         <Searchbar
+          icon={isFavouriteToggled ? "heart" : "heart-outline"}
+          onIconPress={() => setIsFavouriteToggled(!isFavouriteToggled)}
           placeholder="Search for a location"
           onChangeText={onChangeSearch}
           value={searchQuery}

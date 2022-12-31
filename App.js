@@ -1,12 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import { ThemeProvider } from "styled-components";
 import { theme } from "./src/layout/theme";
 import { useFonts, Oswald_400Regular } from "@expo-google-fonts/oswald";
 import { useFonts as useLato, Lato_400Regular } from "@expo-google-fonts/lato";
-import { RestaurantContextProvider } from "./src/services/restraurants/RestaurantContext";
-import { LocationContextProvider } from "./src/services/location/LocationContext";
 import Navigation from "./src/layout/navigation";
+import { AuthContextProvider } from "./src/services/auth/AuthContext";
 
 export default function App() {
   let [oswaldLoaded] = useFonts({
@@ -24,12 +23,11 @@ export default function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <LocationContextProvider>
-          <RestaurantContextProvider>
-            <Navigation />
-          </RestaurantContextProvider>
-        </LocationContextProvider>
+        <AuthContextProvider>
+          <Navigation />
+        </AuthContextProvider>
       </ThemeProvider>
+
       <ExpoStatusBar style="auto" />
     </>
   );

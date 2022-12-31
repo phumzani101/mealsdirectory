@@ -30,7 +30,6 @@ export const RestaurantContextProvider = ({ children }) => {
   useEffect(() => {
     if (location) {
       const loc = `${location.lat},${location.lng}`;
-      console.log(loc);
       loadRestaurant(loc);
     }
   }, [location]);

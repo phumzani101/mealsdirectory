@@ -51,7 +51,7 @@ const Open = styled(SvgXml)`
   flex-direction: row;
 `;
 
-const RestaurantItem = ({ restaurant, gotoResturantDetail }) => {
+const RestaurantDetails = ({ restaurant, gotoResturantDetail }) => {
   const {
     name = "fuckery Restriction",
     // icon,
@@ -67,36 +67,30 @@ const RestaurantItem = ({ restaurant, gotoResturantDetail }) => {
   return (
     <StyledCard>
       <FavouriteButton restaurant={restaurant} />
-      <TouchableOpacity
-        onPress={() => gotoResturantDetail(restaurant)}
-        key={restaurant.name}
-      >
-        <Card.Cover source={{ uri: photos[0] }} key={name} />
-        <Card.Content>
-          <StyledTitle>{name}</StyledTitle>
-          <Section>
-            <RatingRow>
-              {ratingArray.map((_, i) => (
-                <SvgXml
-                  xml={star}
-                  width={20}
-                  height={20}
-                  key={`${place_id}-${i}`}
-                />
-              ))}
-            </RatingRow>
-            <SectionEnd>
-              {isClosedTemporily && <Text variant="label">Closed</Text>}
-              {isOpenNow && <Open xml={open} width={20} height={20} />}
-            </SectionEnd>
-          </Section>
-          <StyledParagraph>{address}</StyledParagraph>
-        </Card.Content>
-      </TouchableOpacity>
+
+      <Card.Cover source={{ uri: photos[0] }} key={name} />
+      <Card.Content>
+        <StyledTitle>{name}</StyledTitle>
+        <Section>
+          <RatingRow>
+            {ratingArray.map((_, i) => (
+              <SvgXml
+                xml={star}
+                width={20}
+                height={20}
+                key={`${place_id}-${i}`}
+              />
+            ))}
+          </RatingRow>
+          <SectionEnd>
+            {isClosedTemporily && <Text variant="label">Closed</Text>}
+            {isOpenNow && <Open xml={open} width={20} height={20} />}
+          </SectionEnd>
+        </Section>
+        <StyledParagraph>{address}</StyledParagraph>
+      </Card.Content>
     </StyledCard>
   );
 };
 
-// const styles = StyleSheet.create({});
-
-export default RestaurantItem;
+export default RestaurantDetails;

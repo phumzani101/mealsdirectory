@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import { SafeAreaView, StatusBar, FlatList } from "react-native";
 import RestaurantItem from "../components/RestaurantItem";
@@ -7,7 +7,8 @@ import styled from "styled-components/native";
 import { RestaurantContext } from "../../../services/restraurants/RestaurantContext";
 import { ActivityIndicator, MD2Colors } from "react-native-paper";
 import RestaurantSearchBar from "../components/RestaurantSearchBar";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { FavouriteContext } from "../../../services/favourites/FovouriteService";
+import FavouriteBar from "../../../components/favourites/FavouriteBar";
 
 const SafeAreaViewContainer = styled(SafeAreaView)`
   flex: 1;
@@ -32,12 +33,23 @@ const ActivityLoader = styled(ActivityIndicator)`
 `;
 
 export default function RestraurantScreen({ navigation }) {
+  const [isFavouriteToggled, setIsFavouriteToggled] = useState(false);
   const { restaurants = [], isLoading } = useContext(RestaurantContext);
+  const { favourites } = useContext(FavouriteContext);
+
+  const gotoResturantDetail = (item) => {
+    navigation.navigate("RestraurantDetails", {
+      restaurant: item,
+    });
+  };
 
   return (
     <>
       <SafeAreaViewContainer>
-        <RestaurantSearchBar />
+        <RestaurantSearchBar
+          setIsFavouriteToggled={setIsFavouriteToggled}
+          isFavouriteToggled={isFavouriteToggled}
+        />
         {isLoading && (
           <LoaderContainer>
             <ActivityLoader
@@ -47,19 +59,20 @@ export default function RestraurantScreen({ navigation }) {
             />
           </LoaderContainer>
         )}
+        {isFavouriteToggled && (
+          <FavouriteBar
+            favourites={favourites}
+            gotoResturantDetail={gotoResturantDetail}
+          />
+        )}
         <ListContainer
           data={restaurants}
           renderItem={({ item }) => {
             return (
-              <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate("RestraurantDetails", {
-                    restaurant: item,
-                  })
-                }
-              >
-                <RestaurantItem restaurant={item} />
-              </TouchableOpacity>
+              <RestaurantItem
+                restaurant={item}
+                gotoResturantDetail={gotoResturantDetail}
+              />
             );
           }}
           keyExtractor={(item) => item.name}

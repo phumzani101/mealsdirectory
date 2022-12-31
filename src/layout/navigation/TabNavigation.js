@@ -1,25 +1,19 @@
 import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Text, View } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import RestaurantNavigator from "./RestaurantNavigator";
 import MapScreen from "../../features/maps/screens/MapScreen";
+import { FavouriteContextProvider } from "../../services/favourites/FovouriteService";
+import { LocationContextProvider } from "../../services/location/LocationContext";
+import { RestaurantContextProvider } from "../../services/restraurants/RestaurantContext";
+import SettingsNavigator from "./SettingsNavigator";
 
 const Tab = createBottomTabNavigator();
-
-function SettingsScreen() {
-  return (
-    <View>
-      <Text>Settings!</Text>
-    </View>
-  );
-}
 
 const TAB_ICON = {
   Home: "fast-food",
   Map: "map",
-  Settings: "settings",
+  Acccount: "person",
 };
 
 const screenOptions = ({ route }) => ({
@@ -35,13 +29,21 @@ const screenOptions = ({ route }) => ({
 
 const TabNavigation = () => {
   return (
-    <NavigationContainer>
-      <Tab.Navigator screenOptions={screenOptions}>
-        <Tab.Screen name="Home" component={RestaurantNavigator} />
-        <Tab.Screen name="Map" component={MapScreen} />
-        <Tab.Screen name="Settings" component={SettingsScreen} />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <FavouriteContextProvider>
+      <LocationContextProvider>
+        <RestaurantContextProvider>
+          <Tab.Navigator screenOptions={screenOptions}>
+            <Tab.Screen name="Home" component={RestaurantNavigator} />
+            <Tab.Screen name="Map" component={MapScreen} />
+            <Tab.Screen
+              name="Acccount"
+              component={SettingsNavigator}
+              options={{ headerShown: false }}
+            />
+          </Tab.Navigator>
+        </RestaurantContextProvider>
+      </LocationContextProvider>
+    </FavouriteContextProvider>
   );
 };
 
